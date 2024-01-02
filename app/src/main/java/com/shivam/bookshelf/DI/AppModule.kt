@@ -20,7 +20,7 @@ object AppModule {
     @Singleton
     fun provideRetrofit(): Retrofit = Retrofit
         .Builder()
-        .baseUrl("https://www.googleapis.com/books/v1/volumes?q=jazz+history")
+        .baseUrl("https://www.googleapis.com/books/v1/")
         .addConverterFactory(Json.asConverterFactory(contentType))
         .build()
 
