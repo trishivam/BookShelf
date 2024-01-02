@@ -1,9 +1,12 @@
 package com.shivam.bookshelf.network
 
-import com.shivam.bookshelf.data.ImageLinks
+import com.shivam.bookshelf.data.BookSearchResponse
 import retrofit2.http.GET
+import retrofit2.http.Query
 
 interface BookShelfApiService {
-    @GET("v1")
-suspend fun getBookShelfImageLink(): List<ImageLinks>
+    @GET("volumes")
+    suspend fun searchBooks(
+        @Query("q") query: String = "Computing"
+    ): BookSearchResponse
 }

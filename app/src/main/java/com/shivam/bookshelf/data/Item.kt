@@ -1,12 +1,12 @@
 package com.shivam.bookshelf.data
 
+import kotlinx.serialization.Serializable
+
+@Serializable
 data class Item(
-    val accessInfo: AccessInfo,
     val etag: String,
     val id: String,
     val kind: String,
-    val saleInfo: SaleInfo,
-//    val searchInfo: SearchInfo,
     val selfLink: String,
-//    val volumeInfo: VolumeInfo
+    val volumeInfo: VolumeInfo
 )

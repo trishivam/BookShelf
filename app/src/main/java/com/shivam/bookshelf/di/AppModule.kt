@@ -1,4 +1,4 @@
-package com.shivam.bookshelf.DI
+package com.shivam.bookshelf.di
 
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.shivam.bookshelf.network.BookShelfApiService
@@ -16,12 +16,16 @@ import javax.inject.Singleton
 object AppModule {
 
     val contentType = "application/json".toMediaType()
+
     @Provides
     @Singleton
     fun provideRetrofit(): Retrofit = Retrofit
         .Builder()
         .baseUrl("https://www.googleapis.com/books/v1/")
-        .addConverterFactory(Json.asConverterFactory(contentType))
+        .addConverterFactory(Json {
+            ignoreUnknownKeys = true
+            isLenient = true
+        }.asConverterFactory(contentType))
         .build()
 
     @Provides
