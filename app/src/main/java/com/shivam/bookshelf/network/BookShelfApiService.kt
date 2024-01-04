@@ -7,6 +7,6 @@ import retrofit2.http.Query
 interface BookShelfApiService {
     @GET("volumes")
     suspend fun searchBooks(
-        @Query("q") query: String = "Computing"
+        @Query("q") query:String
     ): BookSearchResponse
 }
