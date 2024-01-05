@@ -72,7 +72,6 @@ fun BookShelfAppBar (
 @Composable
 fun NavigationHost (
     navController: NavHostController = rememberNavController(),
-    viewModel: SearchResultViewModel = hiltViewModel()
 ) {
     var canPop by remember { mutableStateOf(false) }
 
@@ -121,21 +120,24 @@ fun NavigationHost (
                 }
                 )) {entry->
                 SearchResultScreen(
-                    searchValue = entry.arguments?.getString("query", "")?:""
-                ) {
-                    navController.navigate(route = "${Routes.BookDetailScreen.name}/${it}")
+                    searchValue = entry.arguments?.getString("query", "")?:"",
+                ){
+                    navController.navigate(route = "${Routes.BookDetailScreen.name}/${it.id}")
                 }
-
             }
 
             composable (
                 route = "${Routes.BookDetailScreen.name}/{bookId}",
                 arguments = listOf(navArgument("bookId"){
-                    type = NavType.IntType
+                    type = NavType.StringType
                 }
             )){entry ->
-                BookDetailScreen( bookId = entry.arguments?.getString("bookId","")?:"")
+                BookDetailScreen(
+                    bookId = entry.arguments?.getString("bookId","")?:""
+                )
             }
         }
     }
 }
+
+

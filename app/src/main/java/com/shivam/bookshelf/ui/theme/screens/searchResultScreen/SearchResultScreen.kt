@@ -16,17 +16,22 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.shivam.bookshelf.data.Item
+import com.shivam.bookshelf.ui.theme.navigation.Routes
 
 
 @Composable
 fun SearchResultScreen(
     viewModel: SearchResultViewModel = hiltViewModel(),
     searchValue:String,
+    onItemClicked: (Item) -> Unit
 ) {
     LaunchedEffect(Unit){
         viewModel.getSearchBook(searchValue)
@@ -37,6 +42,7 @@ fun SearchResultScreen(
     ) {
         if (viewModel.loading){
             CircularProgressIndicator(
+                color = Color.Blue,
                 modifier = Modifier
                     .fillMaxHeight()
                     .wrapContentHeight(Alignment.CenterVertically)
@@ -46,14 +52,15 @@ fun SearchResultScreen(
                 Text(text = viewModel.errorMessage)
         }
         else {
-            BookShelfList(viewModel.bookShelf)
+            BookShelfList(viewModel.bookShelf, onItemClicked)
         }
     }
 }
 
 @Composable
 private fun BookShelfList(
-    bookShelfList: List<Item>
+    bookShelfList: List<Item>,
+    onImageClicked: (Item) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -67,9 +74,9 @@ private fun BookShelfList(
                 contentDescription = "Smallthumb Image",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier.fillMaxWidth().clickable(
-                    onClick = { book }
+                    onClick = { onImageClicked(book) }
                 )
-                )
+            )
         }
     }
 }
