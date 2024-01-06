@@ -1,20 +1,17 @@
-package com.shivam.bookshelf.ui.theme.screens.searchResultScreen
+package com.shivam.bookshelf.ui.theme.screens.HomeScreen
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.shivam.bookshelf.data.BookSearchResponse
 import com.shivam.bookshelf.data.Item
-import com.shivam.bookshelf.data.VolumeInfo
 import com.shivam.bookshelf.network.BookShelfApiService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.net.UnknownHostException
 import javax.inject.Inject
 
-private const val TAG = "HomeViewModel"
 @HiltViewModel
 class SearchResultViewModel @Inject constructor(
     private val apiService: BookShelfApiService
@@ -25,7 +22,7 @@ class SearchResultViewModel @Inject constructor(
 
     var bookShelf by mutableStateOf(listOf<Item>())
 
-   fun getSearchBook(query:String){
+    fun getSearchBook(query:String){
         loading = true
         viewModelScope.launch {
             try {
@@ -43,4 +40,5 @@ class SearchResultViewModel @Inject constructor(
             loading = false
         }
     }
+
 }

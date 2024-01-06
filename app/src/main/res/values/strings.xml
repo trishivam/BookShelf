@@ -2,4 +2,5 @@
     <string name="app_name">BookShelf</string>
     <string name="back_button">Back</string>
     <string name="searchResult">Search Result</string>
+    <string name="content_description_search">Icon Search</string>
 </resources>

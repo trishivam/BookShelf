@@ -9,7 +9,6 @@ import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
 import com.shivam.bookshelf.ui.theme.BookShelfTheme
 import com.shivam.bookshelf.ui.theme.navigation.NavigationHost
-import com.shivam.bookshelf.ui.theme.screens.HomeScreen.SearchBookScreen
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

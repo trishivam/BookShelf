@@ -1,4 +1,4 @@
-package com.shivam.bookshelf.ui.theme.screens
+package com.shivam.bookshelf.ui.theme.screens.details
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf

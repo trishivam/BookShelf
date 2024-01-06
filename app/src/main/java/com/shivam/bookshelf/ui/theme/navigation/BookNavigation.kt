@@ -19,7 +19,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
@@ -28,43 +28,13 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.shivam.bookshelf.data.Item
-import com.shivam.bookshelf.ui.theme.screens.BookDetailScreen
 import com.shivam.bookshelf.ui.theme.screens.HomeScreen.SearchBookScreen
-import com.shivam.bookshelf.ui.theme.screens.searchResultScreen.SearchResultScreen
-import com.shivam.bookshelf.ui.theme.screens.searchResultScreen.SearchResultViewModel
+import com.shivam.bookshelf.ui.theme.screens.details.BookDetailScreen
+import com.shivam.bookshelf.ui.theme.screens.appBar.BookShelfAppBar
 
 enum class Routes {
-    SearchScreen,
     ResultScreen,
     BookDetailScreen
-}
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BookShelfAppBar (
-    currentScreen: Routes,
-    canNavigateBack: Boolean,
-    navigateUp:()->Unit,
-    modifier: Modifier = Modifier
-) {
-    TopAppBar (
-        title = { Text(text = currentScreen.name)},
-        colors = TopAppBarDefaults.mediumTopAppBarColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer
-
-    ),
-        modifier = modifier,
-        navigationIcon = {
-            if (canNavigateBack) {
-                IconButton(onClick = navigateUp) {
-
-                    Icon(imageVector = Icons.Filled.ArrowBack,
-                        contentDescription = "Back Button"
-                    )
-                }
-            }
-        }
-    )
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -88,41 +58,30 @@ fun NavigationHost (
     val backStackEntry by navController.currentBackStackEntryAsState()
     // Get the name of the current screen
     val currentScreen = Routes.valueOf(
-        backStackEntry?.destination?.route ?: Routes.SearchScreen.name
+        backStackEntry?.destination?.route ?: Routes.ResultScreen.name
     )
-    Scaffold (
-        topBar = {
-            BookShelfAppBar(
-                currentScreen = currentScreen,
-                canNavigateBack = canPop,
-                navigateUp = { navController.navigateUp() }
-            )
-        }
-    ) { it ->
+
         val navController = rememberNavController()
         NavHost (
             navController = navController,
-            startDestination = Routes.SearchScreen.name,
-            modifier = Modifier.padding(it)
+            startDestination = Routes.ResultScreen.name,
+            modifier = Modifier.padding(8.dp)
         )
         {
+//            composable (
+//                route = Routes.SearchScreen.name
+//            ) {
+//                SearchBookScreen {
+//                    navController.navigate(route = "${Routes.ResultScreen.name}/${it}")
+//                }
+//            }
+
             composable (
-                route = Routes.SearchScreen.name
-            ) {
-                SearchBookScreen {
-                    navController.navigate(route = "${Routes.ResultScreen.name}/${it}")
-                }
-            }
-            composable (
-                route = "${Routes.ResultScreen.name}/{query}",
-                arguments = listOf(navArgument("query") {
-                type = NavType.StringType
-                }
-                )) {entry->
-                SearchResultScreen(
-                    searchValue = entry.arguments?.getString("query", "")?:"",
+                route = Routes.ResultScreen.name
+                ) {entry->
+                SearchBookScreen(
                 ){
-                    navController.navigate(route = "${Routes.BookDetailScreen.name}/${it.id}")
+                    navController.navigate(route = "${Routes.BookDetailScreen.name}/${it}")
                 }
             }
 
@@ -138,6 +97,5 @@ fun NavigationHost (
             }
         }
     }
-}
 
 
