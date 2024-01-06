@@ -17,6 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -74,15 +76,16 @@ fun SearchBookScreen(
             trailingIcon = { Icon(
                 Icons.Filled.Search,
                 contentDescription = null,
-                modifier = Modifier.height(30.dp)
+                modifier = Modifier
+                    .height(30.dp)
                     .clickable {
-                    viewModel.getSearchBook(searchQuery)
-                }
+                        viewModel.getSearchBook(searchQuery)
+                    }
             ) },
             singleLine = true,
 //            textStyle = TextStyle(brush = brush),
             modifier = Modifier
-                .padding(4.dp)
+                .padding(top = 10.dp, bottom = 20.dp)
                 .fillMaxWidth()
                 .shadow(16.dp)
                 .background(
@@ -114,18 +117,31 @@ fun SearchBookScreen(
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
                     modifier = Modifier.fillMaxSize(),
-                    verticalArrangement = Arrangement.spacedBy(4.dp),
-                    horizontalArrangement = Arrangement.spacedBy(4.dp)
+                    verticalArrangement = Arrangement.spacedBy(2.dp),
+                    horizontalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
                     items(viewModel.bookShelf){ book ->
-                        AsyncImage(
-                            model = book.volumeInfo.imageLinks.thumbnail,
-                            contentDescription = "Smallthumb Image",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.fillMaxWidth().clickable(
-                                onClick = { onImageClicked(book.id) }
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(20.dp),
+                            colors = CardDefaults.cardColors(containerColor = Color.White),
+                            elevation = CardDefaults.cardElevation(
+                                defaultElevation = 4.dp
                             )
-                        )
+                        ) {
+                            AsyncImage(
+                                model = book.volumeInfo.imageLinks.thumbnail,
+                                contentDescription = "Smallthumb Image",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .clickable(
+                                        onClick = { onImageClicked(book.id) }
+                                    )
+                            )
+                        }
+
                     }
                 }
             }

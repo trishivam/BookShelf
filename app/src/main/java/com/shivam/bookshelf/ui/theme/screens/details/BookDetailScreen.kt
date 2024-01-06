@@ -111,7 +111,7 @@ fun GetBookDetail(
                         .padding(4.dp),
                     colors = CardDefaults.cardColors(containerColor = White),
                     elevation = CardDefaults.cardElevation(
-                        defaultElevation = 8.dp
+                        defaultElevation = 4.dp
                     )
                 ) {
 
@@ -119,22 +119,13 @@ fun GetBookDetail(
                         modifier = Modifier.fillMaxSize()
                     ) {
                         Text(
-                            text = "${bookInfo.authors}",
+                            text = "${bookInfo.authors} \n\n ${bookInfo.publisher} \n" +
+                                    " ${bookInfo.publishedDate}",
                             fontSize = 20.sp,
                             color = Color.Black,
-                            fontWeight = FontWeight.Bold,
                             modifier = Modifier.padding(8.dp)
                         )
                     }
-                    Spacer(modifier = Modifier.padding(4.dp))
-                    Text(
-
-                        text = "${bookInfo.publisher} \n ${bookInfo.publishedDate}",
-                        fontSize = 20.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(8.dp)
-                    )
                 }
                 Spacer(modifier = Modifier.padding(4.dp))
                 Card(
@@ -150,7 +141,6 @@ fun GetBookDetail(
                         text = bookInfo.description,
                         fontSize = 20.sp,
                         color = Color.Black,
-                        fontWeight = FontWeight.Bold,
                         modifier = Modifier.padding(8.dp)
                     )
                 }
