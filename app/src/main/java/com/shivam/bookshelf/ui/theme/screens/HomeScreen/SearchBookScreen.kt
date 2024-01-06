@@ -72,7 +72,7 @@ fun SearchBookScreen(
         TextField(
             value = searchQuery.trim(),
             onValueChange = { searchQuery = it },
-            placeholder = { Text("Search") },
+            placeholder = { Text("Search Book") },
             trailingIcon = { Icon(
                 Icons.Filled.Search,
                 contentDescription = null,
